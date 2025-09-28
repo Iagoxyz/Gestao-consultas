@@ -2,12 +2,15 @@ package tech.build.consultas.entities;
 
 import jakarta.persistence.Embeddable;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Embeddable
 public class Responsavel {
 
     private String cpf;
     private String nome;
-    private String dateOfBirth; // ISO yyyy-MM-dd (ou use LocalDate)
+    private LocalDate dateOfBirth; // ISO yyyy-MM-dd (ou use LocalDate)
     private String email;
     private String telefone;
 
@@ -30,11 +33,11 @@ public class Responsavel {
         this.nome = nome;
     }
 
-    public String getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
