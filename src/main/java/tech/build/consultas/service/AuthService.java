@@ -1,6 +1,10 @@
 package tech.build.consultas.service;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import tech.build.consultas.controller.dto.AuthRequest;
 import tech.build.consultas.entities.Usuario;
+import tech.build.consultas.entities.UsuarioTipo;
 import tech.build.consultas.repositories.UsuarioRepository;
 import tech.build.consultas.security.JwtService;
 
@@ -17,10 +21,18 @@ public class AuthService {
         this.jwtService = jwtService;
     }
 
-    public void registrar(Usuario usuario) {
+    public Usuario registrar(Usuario usuario) {
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
-        usuarioRepository.save(usuario);
+
+        // Define tipo padrão se não for informado
+        if (usuario.getTipo() == null) {
+            usuario.setTipo(UsuarioTipo.DEFAULT);
+        }
+
+        // Salva e retorna o usuário persistido
+        return usuarioRepository.save(usuario);
     }
+
 
     public String login(AuthRequest request) {
         Usuario usuario = usuarioRepository.findByEmail(request.email())

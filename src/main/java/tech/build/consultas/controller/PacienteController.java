@@ -4,10 +4,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.build.consultas.controller.dto.PacienteDTO;
+import tech.build.consultas.controller.dto.PacienteResponse;
 import tech.build.consultas.controller.dto.PacienteResponseDTO;
 import tech.build.consultas.controller.dto.PacienteUpdateDTO;
 import tech.build.consultas.entities.Paciente;
-import tech.build.consultas.repositories.PacienteRepository;
 import tech.build.consultas.service.PacienteService;
 
 import java.net.URI;
@@ -24,9 +24,9 @@ public class PacienteController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> criarPaciente(@RequestBody PacienteDTO pacienteDTO) {
-        Paciente novoPaciente = pacienteService.salvarPaciente(pacienteDTO);
-        return ResponseEntity.created(URI.create("/pacientes/" + novoPaciente.getPacienteId())).build();
+    public ResponseEntity<PacienteResponse> criarPaciente(@RequestBody PacienteDTO pacienteDTO) {
+        PacienteResponse novoPaciente = pacienteService.salvarPaciente(pacienteDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novoPaciente);
     }
 
     @GetMapping("/{id}")

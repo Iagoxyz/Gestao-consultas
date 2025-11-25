@@ -3,6 +3,7 @@ package tech.build.consultas.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tech.build.consultas.controller.dto.PacienteDTO;
+import tech.build.consultas.controller.dto.PacienteResponse;
 import tech.build.consultas.controller.dto.PacienteResponseDTO;
 import tech.build.consultas.controller.dto.PacienteUpdateDTO;
 import tech.build.consultas.entities.Endereco;
@@ -20,7 +21,7 @@ public class PacienteService {
     }
 
     @Transactional
-    public Paciente salvarPaciente(PacienteDTO dto) {
+    public PacienteResponse salvarPaciente(PacienteDTO dto) {
         Paciente paciente = new Paciente();
 
         paciente.setPacienteCpf(dto.pacienteCpf());
@@ -50,7 +51,25 @@ public class PacienteService {
             paciente.setResponsavel(responsavel);
         }
 
-        return pacienteRepository.save(paciente);
+        Paciente salvo = pacienteRepository.save(paciente);
+
+        // 🔹 Monta o DTO de resposta
+        PacienteResponse.ResponsavelResponse respDTO = null;
+        if (salvo.getResponsavel() != null) {
+            respDTO = new PacienteResponse.ResponsavelResponse(
+                    salvo.getResponsavel().getNome(),
+                    salvo.getResponsavel().getEmail(),
+                    salvo.getResponsavel().getTelefone()
+            );
+        }
+
+        return new PacienteResponse(
+                salvo.getPacienteNome(),
+                salvo.getPacienteEmail(),
+                salvo.getPacienteTelefone(),
+                salvo.getDataNascimento(),
+                respDTO
+        );
     }
 
     @Transactional(readOnly = true)

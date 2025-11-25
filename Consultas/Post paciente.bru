@@ -10,6 +10,10 @@ post {
   auth: inherit
 }
 
+headers {
+  Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJpYWdvQGV4YW1wbGUuY29tIiwidGlwbyI6IkRFRkFVTFQiLCJpYXQiOjE3NjQwMDM4OTQsImV4cCI6MTc2NDAwNzQ5NH0.JFWHrOb46IJ3MCZAz8RWUZLLqlSHuv3bls7g2F98mro
+}
+
 body:json {
   {
     "pacienteCpf": "12345678901",
@@ -37,4 +41,5 @@ body:json {
 
 settings {
   encodeUrl: true
+  timeout: 0
 }

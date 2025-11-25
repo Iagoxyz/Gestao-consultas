@@ -20,6 +20,7 @@ public class Usuario {
     @Enumerated(EnumType.STRING)
     private UsuarioTipo tipo;
 
+    @Column(name = "senha")
     private String senha;
 
     public Usuario() {
